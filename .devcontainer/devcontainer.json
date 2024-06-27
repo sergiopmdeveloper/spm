@@ -1,0 +1,10 @@
+{
+    "name": "spm",
+    "workspaceFolder": "/app",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached",
+    "image": "node:20.14-bullseye",
+    "runArgs": [
+        "--name",
+        "spm"
+    ]
+}
