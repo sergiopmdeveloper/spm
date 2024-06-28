@@ -4,10 +4,12 @@ import {
 	type ActionFunctionArgs,
 	type MetaFunction,
 } from '@remix-run/node'
-import { Form, useActionData, useNavigation } from '@remix-run/react'
+import { Form, redirect, useActionData, useNavigation } from '@remix-run/react'
+import bcrypt from 'bcrypt'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
+import prisma from '~/lib/prisma'
 import { signInSchema } from '~/validation/sign-in'
 
 export const meta: MetaFunction = () => {
@@ -35,12 +37,30 @@ export async function action({ request }: ActionFunctionArgs) {
 		return json({
 			emailError: validatedFields.error.flatten().fieldErrors.email ?? [],
 			passwordError: validatedFields.error.flatten().fieldErrors.password ?? [],
+			invalidCredentials: false,
 			emailLastValue: email,
 			passwordLastValue: password,
 		})
 	}
 
-	return null
+	const user = await prisma.user.findUnique({
+		where: { email: email as string },
+	})
+
+	const invalidCredentials =
+		!user || !(await bcrypt.compare(password as string, user.password))
+
+	if (invalidCredentials) {
+		return json({
+			emailError: [],
+			passwordError: [],
+			invalidCredentials: true,
+			emailLastValue: email,
+			passwordLastValue: password,
+		})
+	}
+
+	return redirect('/admin/studies')
 }
 
 /**
@@ -55,6 +75,11 @@ export default function Index() {
 		<main>
 			<div className="flex h-screen w-screen items-center justify-center">
 				<div className="w-96 rounded bg-secondary p-6">
+					{actionData?.invalidCredentials && (
+						<p className="text-sm text-red-500">
+							Invalid email or password. Please try again.
+						</p>
+					)}
 					<h1 className="text-3xl font-bold">Sign in</h1>
 					<Form className="mt-6 flex flex-col gap-4" method="post">
 						<div>
