@@ -13,7 +13,4 @@ export default defineConfig({
 		}),
 		tsconfigPaths(),
 	],
-	optimizeDeps: {
-		exclude: ['@mapbox'],
-	},
 })

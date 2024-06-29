@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt'
+import { verify } from 'argon2'
 import { User } from '~/types/user'
 import { type SignInErrorState } from '~/validation/sign-in'
 
@@ -12,7 +12,7 @@ export default async function validateUser(
 	user: User,
 	password: string,
 ): Promise<SignInErrorState> {
-	if (!user || !(await bcrypt.compare(password, user.password))) {
+	if (!user || !(await verify(user.password, password))) {
 		return {
 			emailErrors: [],
 			passwordErrors: [],
