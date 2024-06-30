@@ -78,13 +78,19 @@ export async function action({ request }: ActionFunctionArgs) {
  */
 export default function Index() {
 	const { toast } = useToast()
-	const [searchParams] = useSearchParams()
+	const [searchParams, setSearchParams] = useSearchParams()
 	const actionData = useActionData<typeof action>()
 	const { state } = useNavigation()
 	const submitting = state === 'submitting'
 
 	useEffect(() => {
 		if (searchParams.get('unauthenticated')) {
+			const params = new URLSearchParams()
+
+			setSearchParams(params, {
+				preventScrollReset: true,
+			})
+
 			const timeout = setTimeout(() => {
 				toast({
 					title: 'Forbidden',
