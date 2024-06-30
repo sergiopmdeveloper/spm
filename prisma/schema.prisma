@@ -17,3 +17,16 @@ model User {
 
     @@map(name: "users")
 }
+
+model Study {
+    id          String    @id @default(auto()) @map("_id") @db.ObjectId
+    name        String
+    school      String
+    description String
+    startDate   DateTime  @map(name: "start_date")
+    endDate     DateTime? @map(name: "end_date")
+    createdAt   DateTime  @default(now()) @map(name: "created_at")
+    updatedAt   DateTime  @updatedAt @map(name: "updated_at")
+
+    @@map(name: "studies")
+}
