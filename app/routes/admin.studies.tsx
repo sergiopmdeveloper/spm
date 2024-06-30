@@ -1,5 +1,14 @@
+import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons'
 import { json, redirect, type LoaderFunctionArgs } from '@remix-run/node'
 import { useLoaderData, type MetaFunction } from '@remix-run/react'
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from '~/components/ui/table'
 import prisma from '~/lib/prisma'
 import { commitSession, getSession } from '~/sessions'
 
@@ -39,14 +48,31 @@ export default function Index() {
 
 	return (
 		<main>
-			<h1>Admin studies page</h1>
-			{data && (
-				<ul>
-					{data.studies.map((study) => (
-						<li key={study.id}>{study.name}</li>
+			<Table>
+				<TableHeader>
+					<TableRow>
+						<TableHead className="w-[50px]">ID</TableHead>
+						<TableHead>Name</TableHead>
+						<TableHead>Actions</TableHead>
+					</TableRow>
+				</TableHeader>
+				<TableBody>
+					{data.studies.map((study, index) => (
+						<TableRow key={index}>
+							<TableCell>{index}</TableCell>
+							<TableCell>{study.name}</TableCell>
+							<TableCell className="flex gap-1">
+								<div className="flex h-6 w-6 cursor-pointer items-center justify-center rounded bg-orange-500 hover:brightness-90">
+									<Pencil1Icon className="text-white" />
+								</div>
+								<div className="flex h-6 w-6 cursor-pointer items-center justify-center rounded bg-red-500 hover:brightness-90">
+									<TrashIcon className="text-white" />
+								</div>
+							</TableCell>
+						</TableRow>
 					))}
-				</ul>
-			)}
+				</TableBody>
+			</Table>
 		</main>
 	)
 }
