@@ -1,15 +1,25 @@
 import { ReloadIcon } from '@radix-ui/react-icons'
 import {
 	json,
+	redirect,
 	type ActionFunctionArgs,
+	type LoaderFunctionArgs,
 	type MetaFunction,
 } from '@remix-run/node'
-import { Form, redirect, useActionData, useNavigation } from '@remix-run/react'
+import {
+	Form,
+	useActionData,
+	useNavigation,
+	useSearchParams,
+} from '@remix-run/react'
+import { useEffect } from 'react'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
+import { useToast } from '~/components/ui/use-toast'
 import prisma from '~/lib/prisma'
 import validateUser from '~/services/sign-in'
+import { commitSession, getSession } from '~/sessions'
 import { validateSignInData } from '~/validation/sign-in'
 
 export const meta: MetaFunction = () => {
@@ -22,7 +32,18 @@ export const meta: MetaFunction = () => {
 	]
 }
 
+export async function loader({ request }: LoaderFunctionArgs) {
+	const session = await getSession(request.headers.get('Cookie'))
+
+	if (session.has('userId')) {
+		return redirect('/admin/studies')
+	}
+
+	return null
+}
+
 export async function action({ request }: ActionFunctionArgs) {
+	const session = await getSession(request.headers.get('Cookie'))
 	const body = await request.formData()
 	const email = body.get('email') as string
 	const password = body.get('password') as string
@@ -43,16 +64,38 @@ export async function action({ request }: ActionFunctionArgs) {
 		return json(invalidCredentials)
 	}
 
-	return redirect('/admin/studies')
+	session.set('userId', user?.id as string)
+
+	return redirect('/admin/studies', {
+		headers: {
+			'Set-Cookie': await commitSession(session),
+		},
+	})
 }
 
 /**
  * Sign in page component.
  */
 export default function Index() {
+	const { toast } = useToast()
+	const [searchParams] = useSearchParams()
 	const actionData = useActionData<typeof action>()
 	const { state } = useNavigation()
 	const submitting = state === 'submitting'
+
+	useEffect(() => {
+		if (searchParams.get('unauthenticated')) {
+			const timeout = setTimeout(() => {
+				toast({
+					title: 'Forbidden',
+					description: 'Sign in to access the admin panel',
+					variant: 'destructive',
+				})
+			}, 0)
+
+			return () => clearTimeout(timeout)
+		}
+	}, [])
 
 	return (
 		<main>
