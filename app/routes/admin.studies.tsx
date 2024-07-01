@@ -1,6 +1,12 @@
 import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons'
-import { json, redirect, type LoaderFunctionArgs } from '@remix-run/node'
-import { useLoaderData, type MetaFunction } from '@remix-run/react'
+import {
+	ActionFunctionArgs,
+	json,
+	redirect,
+	type LoaderFunctionArgs,
+} from '@remix-run/node'
+import { useFetcher, useLoaderData, type MetaFunction } from '@remix-run/react'
+import { useEffect, useState } from 'react'
 import { Button } from '~/components/ui/button'
 import {
 	Dialog,
@@ -49,11 +55,34 @@ export async function loader({ request }: LoaderFunctionArgs) {
 	return json({ studies })
 }
 
+export async function action({ request }: ActionFunctionArgs) {
+	const formData = await request.formData()
+	const studyId = formData.get('studyId') as string
+
+	await prisma.study.delete({
+		where: {
+			id: studyId,
+		},
+	})
+
+	const studies = await prisma.study.findMany()
+
+	return json({ studies })
+}
+
 /**
  * Admin studies page component.
  */
 export default function Index() {
-	const data = useLoaderData<typeof loader>()
+	const initialData = useLoaderData<typeof loader>()
+	const [data, setData] = useState(initialData)
+	let fetcher = useFetcher()
+
+	useEffect(() => {
+		if (fetcher.data) {
+			setData(fetcher.data as typeof data)
+		}
+	}, [fetcher.data])
 
 	return (
 		<main>
@@ -87,7 +116,12 @@ export default function Index() {
 													<em>{study.name}</em>. Are you sure?
 												</DialogDescription>
 											</DialogHeader>
-											<Button variant="destructive">Delete</Button>
+											<fetcher.Form method="post">
+												<input type="hidden" name="studyId" value={study.id} />
+												<Button type="submit" variant="destructive">
+													Delete
+												</Button>
+											</fetcher.Form>
 										</DialogContent>
 									</Dialog>
 								</div>
