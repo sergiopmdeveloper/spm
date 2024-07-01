@@ -1,6 +1,15 @@
 import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons'
 import { json, redirect, type LoaderFunctionArgs } from '@remix-run/node'
 import { useLoaderData, type MetaFunction } from '@remix-run/react'
+import { Button } from '~/components/ui/button'
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from '~/components/ui/dialog'
 import {
 	Table,
 	TableBody,
@@ -66,7 +75,21 @@ export default function Index() {
 									<Pencil1Icon className="text-white" />
 								</div>
 								<div className="flex h-6 w-6 cursor-pointer items-center justify-center rounded bg-red-500 hover:brightness-90">
-									<TrashIcon className="text-white" />
+									<Dialog>
+										<DialogTrigger>
+											<TrashIcon className="text-white" />
+										</DialogTrigger>
+										<DialogContent>
+											<DialogHeader>
+												<DialogTitle>Warning</DialogTitle>
+												<DialogDescription>
+													You are going to delete the study{' '}
+													<em>{study.name}</em>. Are you sure?
+												</DialogDescription>
+											</DialogHeader>
+											<Button variant="destructive">Delete</Button>
+										</DialogContent>
+									</Dialog>
 								</div>
 							</TableCell>
 						</TableRow>
