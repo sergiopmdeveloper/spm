@@ -1,0 +1,14 @@
+# Build
+dist
+
+# Astro
+.astro
+
+# Dependencies
+node_modules/
+
+# VSCode
+.vscode
+
+# Docker
+.devcontainer
