@@ -1,0 +1,49 @@
+---
+import Section from "@/layouts/Section.astro";
+import ArrowRight from "@/icons/ArrowRight.astro";
+---
+
+<Section>
+  <header class="flex h-24 items-center justify-between">
+    <a class="cursor-pointer text-3xl font-bold">spm</a>
+
+    <nav class="rounded-xl bg-gray-100 px-8 py-3">
+      <ul class="flex gap-10">
+        <li class="group relative cursor-pointer">
+          <a class="text-lg">About</a>
+
+          <div
+            class="absolute bottom-0 left-0 h-[1px] w-0 bg-black transition-[width] duration-300 group-hover:w-full"
+          >
+          </div>
+        </li>
+
+        <li class="group relative cursor-pointer">
+          <a class="text-lg">Studies</a>
+
+          <div
+            class="absolute bottom-0 left-0 h-[1px] w-0 bg-black transition-[width] duration-300 group-hover:w-full"
+          >
+          </div>
+        </li>
+
+        <li class="group relative cursor-pointer">
+          <a class="text-lg">Career</a>
+
+          <div
+            class="absolute bottom-0 left-0 h-[1px] w-0 bg-black transition-[width] duration-300 group-hover:w-full"
+          >
+          </div>
+        </li>
+      </ul>
+    </nav>
+
+    <button
+      class="group flex items-center justify-center gap-2 rounded-3xl bg-gray-800 px-8 py-3 font-bold text-white transition-[filter] hover:brightness-125"
+    >
+      Contact <ArrowRight
+        class="w-5 fill-white transition-transform group-hover:translate-x-1.5"
+      />
+    </button>
+  </header>
+</Section>
