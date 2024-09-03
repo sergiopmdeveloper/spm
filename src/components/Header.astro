@@ -7,7 +7,9 @@ import ArrowRight from "@/icons/ArrowRight.astro";
   <header class="flex h-24 items-center justify-between">
     <a class="cursor-pointer text-3xl font-extrabold">spm</a>
 
-    <nav class="rounded-xl bg-gray-200/60 px-8 py-3 backdrop-blur-sm">
+    <nav
+      class="hidden rounded-xl bg-gray-200/60 px-8 py-3 backdrop-blur-sm md:block"
+    >
       <ul class="flex gap-10">
         <li class="group relative cursor-pointer">
           <a class="text-lg">About</a>
@@ -38,14 +40,22 @@ import ArrowRight from "@/icons/ArrowRight.astro";
       </ul>
     </nav>
 
-    <button
-      class="group flex items-center justify-center gap-2 rounded-3xl bg-gray-800 px-8 py-3 font-bold text-white transition-[filter] hover:brightness-125"
-    >
-      Contact
+    <div class="flex gap-2">
+      <button
+        class="group flex items-center justify-center gap-2 rounded-3xl bg-gray-800 px-8 py-3 font-bold text-white transition-[filter] hover:brightness-125"
+      >
+        Contact
 
-      <ArrowRight
-        class="w-5 fill-white transition-transform group-hover:translate-x-1.5"
-      />
-    </button>
+        <ArrowRight
+          class="hidden w-5 fill-white transition-transform group-hover:translate-x-1.5 md:block"
+        />
+      </button>
+
+      <button
+        class="flex items-center justify-center rounded-3xl bg-gray-200 px-8 py-3 font-bold text-black transition-[filter] hover:brightness-95 md:hidden"
+      >
+        Menu
+      </button>
+    </div>
   </header>
 </Section>
