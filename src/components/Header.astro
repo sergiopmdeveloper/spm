@@ -40,8 +40,11 @@ import ArrowRight from "@/icons/ArrowRight.astro";
       </ul>
     </nav>
 
-    <div class="absolute left-0 top-0 flex h-screen w-screen">
-      <div class="min-w-36 bg-black/80"></div>
+    <div
+      class="absolute left-0 top-0 z-20 hidden h-screen w-screen md:hidden"
+      id="responsive-menu-block"
+    >
+      <div class="min-w-36 bg-black/80" id="responsive-menu-closer"></div>
 
       <nav class="w-full bg-gray-200/80 pl-8 pt-8 backdrop-blur-md">
         <ul class="flex flex-col gap-1">
@@ -88,10 +91,32 @@ import ArrowRight from "@/icons/ArrowRight.astro";
 
       <button
         class="flex items-center justify-center rounded-3xl bg-gray-200 px-8 py-3 font-bold text-black transition-[filter] hover:brightness-95 md:hidden"
-        id="menu-button"
+        id="responsive-menu-button"
       >
         Menu
       </button>
     </div>
   </header>
 </Section>
+
+<script>
+  const responsiveMenuButton = document.getElementById(
+    "responsive-menu-button"
+  ) as HTMLButtonElement;
+
+  const responsiveMenuBlock = document.getElementById(
+    "responsive-menu-block"
+  ) as HTMLDivElement;
+
+  const responsiveMenuCloser = document.getElementById(
+    "responsive-menu-closer"
+  ) as HTMLDivElement;
+
+  responsiveMenuButton.addEventListener("click", () => {
+    responsiveMenuBlock.classList.replace("hidden", "flex");
+  });
+
+  responsiveMenuCloser.addEventListener("click", () => {
+    responsiveMenuBlock.classList.replace("flex", "hidden");
+  });
+</script>
