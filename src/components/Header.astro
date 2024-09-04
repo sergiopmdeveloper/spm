@@ -5,10 +5,11 @@ import Section from "@/layouts/Section.astro";
 
 <Section class="fixed top-0 z-10">
   <header class="flex h-24 items-center justify-between">
-    <a class="cursor-pointer text-3xl font-extrabold">spm</a>
+    <a class="cursor-pointer text-3xl font-extrabold" id="logo">spm</a>
 
     <nav
       class="hidden rounded-xl bg-gray-200/60 px-8 py-3 backdrop-blur-sm md:block"
+      id="nav"
     >
       <ul class="flex gap-10">
         <li class="group relative cursor-pointer">
@@ -40,6 +41,26 @@ import Section from "@/layouts/Section.astro";
       </ul>
     </nav>
 
+    <div class="flex gap-2" id="buttons">
+      <button
+        class="group flex items-center justify-center gap-2 rounded-3xl bg-gray-800 px-8 py-3 font-bold text-white transition-[filter] hover:brightness-125"
+      >
+        Contact
+
+        <ArrowRight
+          class="hidden w-5 fill-white transition-transform group-hover:translate-x-1.5 md:block"
+        />
+      </button>
+
+      <button
+        class="flex items-center justify-center rounded-3xl bg-gray-200 px-8 py-3 font-bold text-black transition-[filter] hover:brightness-95 md:hidden"
+        id="responsive-menu-button"
+      >
+        Menu
+      </button>
+    </div>
+
+    <!-- Responsive menu -->
     <div
       class="absolute left-0 top-0 z-20 hidden h-screen w-screen md:hidden"
       id="responsive-menu-block"
@@ -78,30 +99,15 @@ import Section from "@/layouts/Section.astro";
         </ul>
       </nav>
     </div>
-
-    <div class="flex gap-2">
-      <button
-        class="group flex items-center justify-center gap-2 rounded-3xl bg-gray-800 px-8 py-3 font-bold text-white transition-[filter] hover:brightness-125"
-      >
-        Contact
-
-        <ArrowRight
-          class="hidden w-5 fill-white transition-transform group-hover:translate-x-1.5 md:block"
-        />
-      </button>
-
-      <button
-        class="flex items-center justify-center rounded-3xl bg-gray-200 px-8 py-3 font-bold text-black transition-[filter] hover:brightness-95 md:hidden"
-        id="responsive-menu-button"
-      >
-        Menu
-      </button>
-    </div>
   </header>
 </Section>
 
 <script>
   import gsap from "gsap";
+
+  const logo = document.getElementById("logo") as HTMLAnchorElement;
+  const nav = document.getElementById("nav") as HTMLDivElement;
+  const buttons = document.getElementById("buttons") as HTMLDivElement;
 
   const responsiveMenuButton = document.getElementById(
     "responsive-menu-button"
@@ -168,6 +174,24 @@ import Section from "@/layouts/Section.astro";
       }
     );
   };
+
+  gsap.fromTo(
+    logo,
+    { opacity: 0, y: -50 },
+    { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }
+  );
+
+  gsap.fromTo(
+    nav,
+    { opacity: 0, y: -50 },
+    { opacity: 1, y: 0, duration: 0.5, delay: 0.1, ease: "power2.out" }
+  );
+
+  gsap.fromTo(
+    buttons,
+    { opacity: 0, y: -50 },
+    { opacity: 1, y: 0, duration: 0.5, delay: 0.2, ease: "power2.out" }
+  );
 
   responsiveMenuButton.addEventListener("click", () => {
     showResponsiveMenu();
