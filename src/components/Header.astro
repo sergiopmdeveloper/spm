@@ -1,6 +1,6 @@
 ---
-import Section from "@/layouts/Section.astro";
 import ArrowRight from "@/icons/ArrowRight.astro";
+import Section from "@/layouts/Section.astro";
 ---
 
 <Section class="fixed top-0 z-10">
@@ -44,9 +44,10 @@ import ArrowRight from "@/icons/ArrowRight.astro";
       class="absolute left-0 top-0 z-20 hidden h-screen w-screen md:hidden"
       id="responsive-menu-block"
     >
-      <div class="min-w-36 bg-black/80" id="responsive-menu-closer"></div>
+      <div class="min-w-36 bg-black opacity-0" id="responsive-menu-closer">
+      </div>
 
-      <nav class="w-full bg-gray-200/80 pl-8 pt-8 backdrop-blur-md">
+      <nav class="w-full bg-gray-200 pl-8 pt-8" id="responsive-menu-content">
         <ul class="flex flex-col gap-1">
           <li class="group relative cursor-pointer">
             <a class="text-5xl">About</a>
@@ -100,6 +101,8 @@ import ArrowRight from "@/icons/ArrowRight.astro";
 </Section>
 
 <script>
+  import gsap from "gsap";
+
   const responsiveMenuButton = document.getElementById(
     "responsive-menu-button"
   ) as HTMLButtonElement;
@@ -112,11 +115,65 @@ import ArrowRight from "@/icons/ArrowRight.astro";
     "responsive-menu-closer"
   ) as HTMLDivElement;
 
-  responsiveMenuButton.addEventListener("click", () => {
+  const responsiveMenuContent = document.getElementById(
+    "responsive-menu-content"
+  ) as HTMLDivElement;
+
+  /**
+   * Show the responsive menu
+   */
+  const showResponsiveMenu = () => {
     responsiveMenuBlock.classList.replace("hidden", "flex");
+
+    gsap.fromTo(
+      responsiveMenuContent,
+      { x: "100%" },
+      {
+        x: 0,
+        duration: 0.5,
+        ease: "power2.out",
+        onComplete: () => {
+          gsap.fromTo(
+            responsiveMenuCloser,
+            { opacity: 0 },
+            { opacity: "80%", duration: 0.25, ease: "power2.out" }
+          );
+        },
+      }
+    );
+  };
+
+  /**
+   * Hide the responsive menu
+   */
+  const hideResponsiveMenu = () => {
+    gsap.fromTo(
+      responsiveMenuCloser,
+      { opacity: "100%" },
+      {
+        opacity: "0%",
+        duration: 0,
+        ease: "power2.out",
+        onComplete: () => {
+          gsap
+            .fromTo(
+              responsiveMenuContent,
+              { x: 0 },
+              { x: "100%", duration: 0.5, ease: "power2.out" }
+            )
+            .then(() => {
+              responsiveMenuBlock.classList.replace("flex", "hidden");
+            });
+        },
+      }
+    );
+  };
+
+  responsiveMenuButton.addEventListener("click", () => {
+    showResponsiveMenu();
   });
 
   responsiveMenuCloser.addEventListener("click", () => {
-    responsiveMenuBlock.classList.replace("flex", "hidden");
+    hideResponsiveMenu();
   });
 </script>
