@@ -40,6 +40,41 @@ import ArrowRight from "@/icons/ArrowRight.astro";
       </ul>
     </nav>
 
+    <div class="absolute left-0 top-0 flex h-screen w-screen">
+      <div class="min-w-36 bg-black/80"></div>
+
+      <nav class="w-full bg-gray-200/80 pl-8 pt-8 backdrop-blur-md">
+        <ul class="flex flex-col gap-1">
+          <li class="group relative cursor-pointer">
+            <a class="text-5xl">About</a>
+
+            <div
+              class="absolute bottom-0 left-0 h-[1px] w-0 bg-black transition-[width] duration-300 group-hover:w-full"
+            >
+            </div>
+          </li>
+
+          <li class="group relative cursor-pointer">
+            <a class="text-5xl">Studies</a>
+
+            <div
+              class="absolute bottom-0 left-0 h-[1px] w-0 bg-black transition-[width] duration-300 group-hover:w-full"
+            >
+            </div>
+          </li>
+
+          <li class="group relative cursor-pointer">
+            <a class="text-5xl">Career</a>
+
+            <div
+              class="absolute bottom-0 left-0 h-[1px] w-0 bg-black transition-[width] duration-300 group-hover:w-full"
+            >
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
     <div class="flex gap-2">
       <button
         class="group flex items-center justify-center gap-2 rounded-3xl bg-gray-800 px-8 py-3 font-bold text-white transition-[filter] hover:brightness-125"
@@ -53,6 +88,7 @@ import ArrowRight from "@/icons/ArrowRight.astro";
 
       <button
         class="flex items-center justify-center rounded-3xl bg-gray-200 px-8 py-3 font-bold text-black transition-[filter] hover:brightness-95 md:hidden"
+        id="menu-button"
       >
         Menu
       </button>
