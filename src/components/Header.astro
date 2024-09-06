@@ -162,7 +162,21 @@ import Section from "@/layouts/Section.astro";
           gsap.fromTo(
             responsiveMenuCloser,
             { opacity: 0 },
-            { opacity: "80%", duration: 0.25, ease: "power2.out" }
+            {
+              opacity: "80%",
+              duration: 0.25,
+              ease: "power2.out",
+              onComplete: () => {
+                responsiveMenuCloser.addEventListener(
+                  "click",
+                  hideResponsiveMenu
+                );
+
+                responsiveMenuLinks.forEach((item) => {
+                  item.addEventListener("click", hideResponsiveMenu);
+                });
+              },
+            }
           );
         },
       }
@@ -173,6 +187,12 @@ import Section from "@/layouts/Section.astro";
    * Hide the responsive menu
    */
   const hideResponsiveMenu = () => {
+    responsiveMenuCloser.removeEventListener("click", hideResponsiveMenu);
+
+    responsiveMenuLinks.forEach((item) => {
+      item.removeEventListener("click", hideResponsiveMenu);
+    });
+
     gsap.fromTo(
       responsiveMenuCloser,
       { opacity: "100%" },
@@ -181,15 +201,18 @@ import Section from "@/layouts/Section.astro";
         duration: 0,
         ease: "power2.out",
         onComplete: () => {
-          gsap
-            .fromTo(
-              responsiveMenuContent,
-              { x: 0 },
-              { x: "100%", duration: 0.5, ease: "power2.out" }
-            )
-            .then(() => {
-              responsiveMenuBlock.classList.replace("flex", "hidden");
-            });
+          gsap.fromTo(
+            responsiveMenuContent,
+            { x: 0 },
+            {
+              x: "100%",
+              duration: 0.5,
+              ease: "power2.out",
+              onComplete: () => {
+                responsiveMenuBlock.classList.replace("flex", "hidden");
+              },
+            }
+          );
         },
       }
     );
@@ -215,15 +238,5 @@ import Section from "@/layouts/Section.astro";
 
   responsiveMenuButton.addEventListener("click", () => {
     showResponsiveMenu();
-  });
-
-  responsiveMenuCloser.addEventListener("click", () => {
-    hideResponsiveMenu();
-  });
-
-  responsiveMenuLinks.forEach((item) => {
-    item.addEventListener("click", () => {
-      hideResponsiveMenu();
-    });
   });
 </script>
