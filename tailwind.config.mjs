@@ -2,7 +2,11 @@
 export default {
   content: ["./src/**/*.{astro,html}"],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        xs: "480px",
+      },
+    },
   },
   plugins: [],
 };

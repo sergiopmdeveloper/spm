@@ -1,5 +1,6 @@
 ---
 import ArrowRight from "@/icons/ArrowRight.astro";
+import ThreeDots from "@/icons/ThreeDots.astro";
 import Section from "@/layouts/Section.astro";
 ---
 
@@ -41,9 +42,9 @@ import Section from "@/layouts/Section.astro";
       </ul>
     </nav>
 
-    <div class="flex gap-2" id="buttons">
+    <div class="flex gap-1 xs:gap-2" id="buttons">
       <button
-        class="group flex items-center justify-center gap-2 rounded-3xl bg-gray-800 px-8 py-3 font-bold text-white transition-[filter] hover:brightness-125"
+        class="group flex items-center justify-center gap-2 rounded-3xl bg-gray-800 px-4 py-3 text-sm font-bold text-white transition-[filter] hover:brightness-125 xs:px-8 xs:text-base"
       >
         Contact
 
@@ -53,25 +54,32 @@ import Section from "@/layouts/Section.astro";
       </button>
 
       <button
-        class="flex items-center justify-center rounded-3xl bg-gray-200 px-8 py-3 font-bold text-black transition-[filter] hover:brightness-95 md:hidden"
+        class="flex items-center justify-center rounded-3xl bg-gray-200 px-4 py-3 text-sm font-bold text-black transition-[filter] hover:brightness-95 xs:px-8 xs:text-base md:hidden"
         id="responsive-menu-button"
       >
-        Menu
+        <span class="hidden xs:block">Menu</span>
+
+        <ThreeDots class="w-5 fill-black xs:hidden" />
       </button>
     </div>
 
-    <!-- Responsive menu -->
     <div
       class="absolute left-0 top-0 z-20 hidden h-screen w-screen md:hidden"
       id="responsive-menu-block"
     >
-      <div class="min-w-36 bg-black opacity-0" id="responsive-menu-closer">
+      <div
+        class="min-w-20 bg-black opacity-0 xs:min-w-36"
+        id="responsive-menu-closer"
+      >
       </div>
 
-      <nav class="w-full bg-gray-200 pl-8 pt-8" id="responsive-menu-content">
+      <nav
+        class="w-full bg-gray-200 pl-4 pt-4 xs:pl-8 xs:pt-8"
+        id="responsive-menu-content"
+      >
         <ul class="flex flex-col gap-1">
           <li class="group relative cursor-pointer">
-            <a class="text-5xl">About</a>
+            <a class="text-3xl xs:text-4xl">About</a>
 
             <div
               class="absolute bottom-0 left-0 h-[1px] w-0 bg-black transition-[width] duration-300 group-hover:w-full"
@@ -80,7 +88,7 @@ import Section from "@/layouts/Section.astro";
           </li>
 
           <li class="group relative cursor-pointer">
-            <a class="text-5xl">Studies</a>
+            <a class="text-3xl xs:text-4xl">Studies</a>
 
             <div
               class="absolute bottom-0 left-0 h-[1px] w-0 bg-black transition-[width] duration-300 group-hover:w-full"
@@ -89,7 +97,7 @@ import Section from "@/layouts/Section.astro";
           </li>
 
           <li class="group relative cursor-pointer">
-            <a class="text-5xl">Career</a>
+            <a class="text-3xl xs:text-4xl">Career</a>
 
             <div
               class="absolute bottom-0 left-0 h-[1px] w-0 bg-black transition-[width] duration-300 group-hover:w-full"
