@@ -4,11 +4,11 @@ import Linkedin from "@/icons/Linkedin.astro";
 import Section from "@/layouts/Section.astro";
 ---
 
-<Section>
+<Section class="mt-32 xs:mt-24">
   <main
-    class="mx-auto flex h-screen max-w-[62.5rem] flex-col items-center justify-center gap-8 text-center"
+    class="mx-auto flex h-[calc(100vh-6rem)] max-w-[62.5rem] flex-col items-center gap-8 xs:justify-center xs:text-center"
   >
-    <h2 class="text-7xl">
+    <h2 class="text-5xl xs:text-6xl lg:text-7xl">
       My name is Sergio Peña and I'm a full stack developer
     </h2>
 
@@ -22,22 +22,29 @@ import Section from "@/layouts/Section.astro";
       <strong>Let's work together?</strong>
     </p>
 
-    <div class="flex gap-2">
-      <button
-        class="flex items-center justify-center gap-2 rounded-3xl bg-gray-800 px-8 py-3 font-bold text-white transition-[filter] hover:brightness-125"
+    <div class="w-full xs:flex xs:w-auto xs:gap-2">
+      <a href="https://github.com/sergiopmdeveloper" target="_blank">
+        <button
+          class="flex w-full items-center justify-center gap-2 rounded-3xl bg-gray-800 px-8 py-3 font-bold text-white transition-[filter] hover:brightness-125"
+        >
+          GitHub
+
+          <Github class="w-5 fill-white" />
+        </button>
+      </a>
+
+      <a
+        href="https://es.linkedin.com/in/sergio-pe%C3%B1a-mu%C3%B1oz-963b6a220"
+        target="_blank"
       >
-        GitHub
+        <button
+          class="mt-2 flex w-full items-center justify-center gap-2 rounded-3xl bg-gray-800 px-8 py-3 font-bold text-white transition-[filter] hover:brightness-125 xs:mt-0"
+        >
+          LinkedIn
 
-        <Github class="w-5 fill-white" />
-      </button>
-
-      <button
-        class="flex items-center justify-center gap-2 rounded-3xl bg-gray-800 px-8 py-3 font-bold text-white transition-[filter] hover:brightness-125"
-      >
-        LinkedIn
-
-        <Linkedin class="w-5 fill-white" />
-      </button>
+          <Linkedin class="w-5 fill-white" />
+        </button>
+      </a>
     </div>
   </main>
 </Section>
