@@ -1,0 +1,43 @@
+---
+import Github from "@/icons/Github.astro";
+import Linkedin from "@/icons/Linkedin.astro";
+import Section from "@/layouts/Section.astro";
+---
+
+<Section>
+  <main
+    class="mx-auto flex h-screen max-w-[62.5rem] flex-col items-center justify-center gap-8 text-center"
+  >
+    <h2 class="text-7xl">
+      My name is Sergio Peña and I'm a full stack developer
+    </h2>
+
+    <p>
+      Hi, I'm Sergio Peña and I'm a <strong>full stack developer!</strong>
+      Welcome to my portfolio where you will find everything you need to know about
+      me professionally. Software development is my
+      <strong>profession</strong> and my <strong>passion</strong>. Backend,
+      frontend, machine learning, scripting, automation, open source...
+      Everything that has to do with coding is welcome.
+      <strong>Let's work together?</strong>
+    </p>
+
+    <div class="flex gap-2">
+      <button
+        class="flex items-center justify-center gap-2 rounded-3xl bg-gray-800 px-8 py-3 font-bold text-white transition-[filter] hover:brightness-125"
+      >
+        GitHub
+
+        <Github class="w-5 fill-white" />
+      </button>
+
+      <button
+        class="flex items-center justify-center gap-2 rounded-3xl bg-gray-800 px-8 py-3 font-bold text-white transition-[filter] hover:brightness-125"
+      >
+        LinkedIn
+
+        <Linkedin class="w-5 fill-white" />
+      </button>
+    </div>
+  </main>
+</Section>
