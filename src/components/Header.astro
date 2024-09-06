@@ -14,7 +14,7 @@ import Section from "@/layouts/Section.astro";
     >
       <ul class="flex gap-10">
         <li class="group relative cursor-pointer">
-          <a class="text-lg">About</a>
+          <a class="text-lg" href="#about">About</a>
 
           <div
             class="absolute bottom-0 left-0 h-[1px] w-0 bg-black transition-[width] duration-300 group-hover:w-full"
@@ -23,7 +23,7 @@ import Section from "@/layouts/Section.astro";
         </li>
 
         <li class="group relative cursor-pointer">
-          <a class="text-lg">Studies</a>
+          <a class="text-lg" href="#studies">Studies</a>
 
           <div
             class="absolute bottom-0 left-0 h-[1px] w-0 bg-black transition-[width] duration-300 group-hover:w-full"
@@ -32,7 +32,7 @@ import Section from "@/layouts/Section.astro";
         </li>
 
         <li class="group relative cursor-pointer">
-          <a class="text-lg">Career</a>
+          <a class="text-lg" href="#career">Career</a>
 
           <div
             class="absolute bottom-0 left-0 h-[1px] w-0 bg-black transition-[width] duration-300 group-hover:w-full"
@@ -43,15 +43,17 @@ import Section from "@/layouts/Section.astro";
     </nav>
 
     <div class="flex gap-1 xs:gap-2" id="buttons">
-      <button
-        class="group flex items-center justify-center gap-2 rounded-3xl bg-gray-800 px-4 py-3 text-sm font-bold text-white transition-[filter] hover:brightness-125 xs:px-8 xs:text-base"
-      >
-        Contact
+      <a href="#contact">
+        <button
+          class="group flex items-center justify-center gap-2 rounded-3xl bg-gray-800 px-4 py-3 text-sm font-bold text-white transition-[filter] hover:brightness-125 xs:px-8 xs:text-base"
+        >
+          Contact
 
-        <ArrowRight
-          class="hidden w-5 fill-white transition-transform group-hover:translate-x-1.5 md:block"
-        />
-      </button>
+          <ArrowRight
+            class="hidden w-5 fill-white transition-transform group-hover:translate-x-1.5 md:block"
+          />
+        </button>
+      </a>
 
       <button
         class="flex items-center justify-center rounded-3xl bg-gray-200 px-4 py-3 text-sm font-bold text-black transition-[filter] hover:brightness-95 xs:px-8 xs:text-base md:hidden"
@@ -78,32 +80,38 @@ import Section from "@/layouts/Section.astro";
         id="responsive-menu-content"
       >
         <ul class="flex flex-col gap-1">
-          <li class="group relative cursor-pointer">
-            <a class="text-3xl xs:text-4xl">About</a>
+          <a class="text-3xl xs:text-4xl" href="#about">
+            <li class="group relative cursor-pointer">
+              About
 
-            <div
-              class="absolute bottom-0 left-0 h-[1px] w-0 bg-black transition-[width] duration-300 group-hover:w-full"
-            >
-            </div>
-          </li>
+              <div
+                class="absolute bottom-0 left-0 h-[1px] w-0 bg-black transition-[width] duration-300 group-hover:w-full"
+              >
+              </div>
+            </li>
+          </a>
 
-          <li class="group relative cursor-pointer">
-            <a class="text-3xl xs:text-4xl">Studies</a>
+          <a class="text-3xl xs:text-4xl" href="#studies">
+            <li class="group relative cursor-pointer">
+              Studies
 
-            <div
-              class="absolute bottom-0 left-0 h-[1px] w-0 bg-black transition-[width] duration-300 group-hover:w-full"
-            >
-            </div>
-          </li>
+              <div
+                class="absolute bottom-0 left-0 h-[1px] w-0 bg-black transition-[width] duration-300 group-hover:w-full"
+              >
+              </div>
+            </li>
+          </a>
 
-          <li class="group relative cursor-pointer">
-            <a class="text-3xl xs:text-4xl">Career</a>
+          <a class="text-3xl xs:text-4xl" href="#career">
+            <li class="group relative cursor-pointer">
+              Career
 
-            <div
-              class="absolute bottom-0 left-0 h-[1px] w-0 bg-black transition-[width] duration-300 group-hover:w-full"
-            >
-            </div>
-          </li>
+              <div
+                class="absolute bottom-0 left-0 h-[1px] w-0 bg-black transition-[width] duration-300 group-hover:w-full"
+              >
+              </div>
+            </li>
+          </a>
         </ul>
       </nav>
     </div>
@@ -132,6 +140,10 @@ import Section from "@/layouts/Section.astro";
   const responsiveMenuContent = document.getElementById(
     "responsive-menu-content"
   ) as HTMLDivElement;
+
+  const responsiveMenuLinks = responsiveMenuContent.querySelectorAll(
+    "a"
+  ) as NodeListOf<HTMLAnchorElement>;
 
   /**
    * Show the responsive menu
@@ -207,5 +219,11 @@ import Section from "@/layouts/Section.astro";
 
   responsiveMenuCloser.addEventListener("click", () => {
     hideResponsiveMenu();
+  });
+
+  responsiveMenuLinks.forEach((item) => {
+    item.addEventListener("click", () => {
+      hideResponsiveMenu();
+    });
   });
 </script>
