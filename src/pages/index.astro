@@ -1,4 +1,5 @@
 ---
+import DarkToggle from "@/components/DarkToggle.astro";
 import Header from "@/components/Header.astro";
 import Intro from "@/components/Intro.astro";
 import "@fontsource-variable/manrope";
@@ -15,7 +16,7 @@ import "@fontsource-variable/manrope";
     <title>SPM</title>
 
     <style>
-      body {
+      html {
         font-family: "Manrope Variable", sans-serif;
       }
     </style>
@@ -24,5 +25,6 @@ import "@fontsource-variable/manrope";
   <body>
     <Header />
     <Intro />
+    <DarkToggle />
   </body>
 </html>

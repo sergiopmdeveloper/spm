@@ -1,0 +1,35 @@
+---
+import Moon from "@/icons/Moon.astro";
+import Sun from "@/icons/Sun.astro";
+---
+
+<div
+  id="theme-toggle"
+  class="fixed bottom-4 right-4 cursor-pointer rounded-full bg-gray-800 p-3 transition-colors hover:brightness-125 dark:bg-white dark:hover:brightness-90"
+>
+  <Sun class="w-5 fill-white dark:hidden" />
+  <Moon class="hidden w-5 fill-gray-800 dark:block" />
+</div>
+
+<script>
+  const themeToggle = document.getElementById("theme-toggle") as HTMLDivElement;
+  const html = document.documentElement;
+
+  let theme = localStorage.getItem("theme");
+
+  if (theme === "dark") {
+    html.classList.add("dark");
+  }
+
+  themeToggle.addEventListener("click", () => {
+    if (!theme || theme === "light") {
+      localStorage.setItem("theme", "dark");
+      html.classList.add("dark");
+      theme = "dark";
+    } else {
+      localStorage.setItem("theme", "light");
+      html.classList.remove("dark");
+      theme = "light";
+    }
+  });
+</script>
