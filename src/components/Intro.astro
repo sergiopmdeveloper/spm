@@ -8,11 +8,11 @@ import Section from "@/layouts/Section.astro";
   <main
     class="mx-auto flex h-auto max-w-[62.5rem] flex-col items-center gap-10 xs:h-[calc(100vh-6rem)] xs:justify-center xs:text-center"
   >
-    <h2 class="text-5xl xs:text-6xl lg:text-7xl">
+    <h2 class="text-5xl xs:text-6xl lg:text-7xl" id="title-intro">
       My name is Sergio Peña and I'm a full stack developer
     </h2>
 
-    <p>
+    <p id="description-intro">
       Hi, I'm Sergio Peña and I'm a <strong>full stack developer!</strong>
       Welcome to my portfolio where you will find everything you need to know about
       me professionally. Software development is my
@@ -22,7 +22,7 @@ import Section from "@/layouts/Section.astro";
       <strong>Let's work together?</strong>
     </p>
 
-    <div class="w-full xs:flex xs:w-auto xs:gap-2">
+    <div class="w-full xs:flex xs:w-auto xs:gap-2" id="buttons-intro">
       <a href="https://github.com/sergiopmdeveloper" target="_blank">
         <button
           class="flex w-full items-center justify-center gap-2 rounded-3xl bg-gray-800 px-8 py-3 font-bold text-white transition-[filter] hover:brightness-125"
@@ -48,3 +48,35 @@ import Section from "@/layouts/Section.astro";
     </div>
   </main>
 </Section>
+
+<script>
+  import gsap from "gsap";
+
+  const title = document.getElementById("title-intro");
+  const description = document.getElementById("description-intro");
+  const buttons = document.getElementById("buttons-intro");
+
+  gsap.from(title, {
+    opacity: 0,
+    y: -50,
+    duration: 0.5,
+    delay: 0.3,
+    ease: "power2.out",
+  });
+
+  gsap.from(description, {
+    opacity: 0,
+    y: -50,
+    duration: 0.5,
+    delay: 0.4,
+    ease: "power2.out",
+  });
+
+  gsap.from(buttons, {
+    opacity: 0,
+    y: -50,
+    duration: 0.5,
+    delay: 0.5,
+    ease: "power2.out",
+  });
+</script>
