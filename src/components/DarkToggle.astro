@@ -12,6 +12,8 @@ import Sun from "@/icons/Sun.astro";
 </div>
 
 <script>
+  import gsap from "gsap";
+
   const themeToggle = document.getElementById("theme-toggle") as HTMLDivElement;
   const html = document.documentElement;
 
@@ -28,4 +30,6 @@ import Sun from "@/icons/Sun.astro";
       theme = "light";
     }
   });
+
+  gsap.fromTo(themeToggle, { x: 75 }, { x: 0, duration: 0.5, delay: 0.6 });
 </script>
