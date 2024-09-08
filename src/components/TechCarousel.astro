@@ -1,0 +1,70 @@
+---
+import Bash from "@/icons/Bash.astro";
+import Django from "@/icons/Django.astro";
+import Git from "@/icons/Git.astro";
+import Javascript from "@/icons/Javascript.astro";
+import Python from "@/icons/Python.astro";
+import React from "@/icons/React.astro";
+import Tailwind from "@/icons/Tailwind.astro";
+import Typescript from "@/icons/Typescript.astro";
+import Section from "@/layouts/Section.astro";
+---
+
+<Section>
+  <div class="relative w-full overflow-hidden">
+    <div
+      class="absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-white to-transparent dark:from-gray-900"
+    >
+    </div>
+
+    <div
+      class="absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-white to-transparent dark:from-gray-900"
+    >
+    </div>
+
+    <div class="animate-scroll flex">
+      <div class="flex min-w-full justify-around">
+        <Python class="w-20 fill-gray-800 dark:fill-gray-200" />
+        <Javascript class="w-20 fill-gray-800 dark:fill-gray-200" />
+        <Typescript class="w-20 fill-gray-800 dark:fill-gray-200" />
+        <Django class="w-20 fill-gray-800 dark:fill-gray-200" />
+        <React class="hidden w-20 fill-gray-800 sm:block dark:fill-gray-200" />
+        <Git class="hidden w-20 fill-gray-800 sm:block dark:fill-gray-200" />
+        <Bash class="hidden w-20 fill-gray-800 md:block dark:fill-gray-200" />
+
+        <Tailwind
+          class="hidden w-20 fill-gray-800 lg:block dark:fill-gray-200"
+        />
+      </div>
+
+      <div class="flex min-w-full justify-around">
+        <Python class="w-20 fill-gray-800 dark:fill-gray-200" />
+        <Javascript class="w-20 fill-gray-800 dark:fill-gray-200" />
+        <Typescript class="w-20 fill-gray-800 dark:fill-gray-200" />
+        <Django class="w-20 fill-gray-800 dark:fill-gray-200" />
+        <React class="hidden w-20 fill-gray-800 sm:block dark:fill-gray-200" />
+        <Git class="hidden w-20 fill-gray-800 sm:block dark:fill-gray-200" />
+        <Bash class="hidden w-20 fill-gray-800 md:block dark:fill-gray-200" />
+
+        <Tailwind
+          class="hidden w-20 fill-gray-800 lg:block dark:fill-gray-200"
+        />
+      </div>
+    </div>
+  </div>
+
+  <style>
+    @keyframes scroll {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
+    .animate-scroll {
+      animation: scroll 20s linear infinite;
+    }
+  </style>
+</Section>
