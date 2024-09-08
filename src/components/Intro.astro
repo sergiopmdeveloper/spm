@@ -8,11 +8,14 @@ import Section from "@/layouts/Section.astro";
   <main
     class="mx-auto flex h-auto max-w-[62.5rem] flex-col items-center gap-10 xs:h-[calc(100vh-6rem)] xs:justify-center xs:text-center"
   >
-    <h2 class="text-5xl xs:text-6xl lg:text-7xl" id="title-intro">
+    <h2
+      class="text-5xl text-gray-800 xs:text-6xl lg:text-7xl dark:text-gray-200"
+      id="title-intro"
+    >
       My name is Sergio Peña and I'm a full stack developer
     </h2>
 
-    <p id="description-intro">
+    <p class="text-gray-800 dark:text-gray-200" id="description-intro">
       Hi, I'm Sergio Peña and I'm a <strong>full stack developer!</strong>
       Welcome to my portfolio where you will find everything you need to know about
       me professionally. Software development is my
@@ -25,11 +28,11 @@ import Section from "@/layouts/Section.astro";
     <div class="w-full xs:flex xs:w-auto xs:gap-2" id="buttons-intro">
       <a href="https://github.com/sergiopmdeveloper" target="_blank">
         <button
-          class="flex w-full items-center justify-center gap-2 rounded-3xl bg-gray-800 px-8 py-3 font-bold text-white transition-[filter] hover:brightness-125"
+          class="flex w-full items-center justify-center gap-2 rounded-3xl bg-gray-800 px-8 py-3 font-bold text-gray-200 transition-[filter] hover:brightness-125 dark:bg-gray-200 dark:text-gray-800 dark:hover:brightness-90"
         >
           GitHub
 
-          <Github class="w-5 fill-white" />
+          <Github class="w-5 fill-gray-200 dark:fill-gray-800" />
         </button>
       </a>
 
@@ -38,11 +41,11 @@ import Section from "@/layouts/Section.astro";
         target="_blank"
       >
         <button
-          class="mt-2 flex w-full items-center justify-center gap-2 rounded-3xl bg-gray-800 px-8 py-3 font-bold text-white transition-[filter] hover:brightness-125 xs:mt-0"
+          class="mt-2 flex w-full items-center justify-center gap-2 rounded-3xl bg-gray-800 px-8 py-3 font-bold text-gray-200 transition-[filter] hover:brightness-125 xs:mt-0 dark:bg-gray-200 dark:text-gray-800 dark:hover:brightness-90"
         >
           LinkedIn
 
-          <Linkedin class="w-5 fill-white" />
+          <Linkedin class="w-5 fill-gray-200 dark:fill-gray-800" />
         </button>
       </a>
     </div>

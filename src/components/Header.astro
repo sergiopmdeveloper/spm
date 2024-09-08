@@ -6,10 +6,15 @@ import Section from "@/layouts/Section.astro";
 
 <Section class="fixed top-0 z-10">
   <header class="flex h-24 items-center justify-between">
-    <a class="cursor-pointer text-3xl font-extrabold" id="logo">spm</a>
+    <a
+      class="cursor-pointer text-3xl font-extrabold text-gray-800 dark:text-gray-200"
+      id="logo"
+    >
+      spm
+    </a>
 
     <nav
-      class="hidden rounded-xl bg-gray-200/60 px-8 py-3 backdrop-blur-sm md:block"
+      class="hidden rounded-xl bg-gray-200/60 px-8 py-3 text-gray-800 backdrop-blur-sm md:block dark:bg-gray-600/60 dark:text-gray-200"
       id="nav"
     >
       <ul class="flex gap-10">
@@ -17,7 +22,7 @@ import Section from "@/layouts/Section.astro";
           <a class="text-lg" href="#about">About</a>
 
           <div
-            class="absolute bottom-0 left-0 h-[1px] w-0 bg-black transition-[width] duration-300 group-hover:w-full"
+            class="absolute bottom-0 left-0 h-[1px] w-0 bg-gray-800 transition-[width] duration-300 group-hover:w-full dark:bg-gray-200"
           >
           </div>
         </li>
@@ -26,7 +31,7 @@ import Section from "@/layouts/Section.astro";
           <a class="text-lg" href="#studies">Studies</a>
 
           <div
-            class="absolute bottom-0 left-0 h-[1px] w-0 bg-black transition-[width] duration-300 group-hover:w-full"
+            class="absolute bottom-0 left-0 h-[1px] w-0 bg-gray-800 transition-[width] duration-300 group-hover:w-full dark:bg-gray-200"
           >
           </div>
         </li>
@@ -35,7 +40,7 @@ import Section from "@/layouts/Section.astro";
           <a class="text-lg" href="#career">Career</a>
 
           <div
-            class="absolute bottom-0 left-0 h-[1px] w-0 bg-black transition-[width] duration-300 group-hover:w-full"
+            class="absolute bottom-0 left-0 h-[1px] w-0 bg-gray-800 transition-[width] duration-300 group-hover:w-full dark:bg-gray-200"
           >
           </div>
         </li>
@@ -45,23 +50,23 @@ import Section from "@/layouts/Section.astro";
     <div class="flex gap-1 xs:gap-2" id="buttons">
       <a href="#contact">
         <button
-          class="group flex items-center justify-center gap-2 rounded-3xl bg-gray-800 px-4 py-3 text-sm font-bold text-white transition-[filter] hover:brightness-125 xs:px-8 xs:text-base"
+          class="group flex items-center justify-center gap-2 rounded-3xl bg-gray-800 px-4 py-3 text-sm font-bold text-gray-200 transition-[filter] hover:brightness-125 xs:px-8 xs:text-base dark:bg-gray-200 dark:text-gray-800 dark:hover:brightness-90"
         >
           Contact
 
           <ArrowRight
-            class="hidden w-5 fill-white transition-transform group-hover:translate-x-1.5 md:block"
+            class="hidden w-5 fill-gray-200 transition-transform group-hover:translate-x-1.5 md:block dark:fill-gray-800"
           />
         </button>
       </a>
 
       <button
-        class="flex items-center justify-center rounded-3xl bg-gray-200 px-4 py-3 text-sm font-bold text-black transition-[filter] hover:brightness-95 xs:px-8 xs:text-base md:hidden"
+        class="flex items-center justify-center rounded-3xl bg-gray-200 px-4 py-3 text-sm font-bold text-gray-800 transition-[filter] hover:brightness-95 xs:px-8 xs:text-base md:hidden dark:bg-gray-600 dark:text-gray-200 dark:hover:brightness-90"
         id="responsive-menu-button"
       >
         <span class="hidden xs:block">Menu</span>
 
-        <ThreeDots class="w-5 fill-black xs:hidden" />
+        <ThreeDots class="w-5 fill-gray-800 xs:hidden dark:fill-gray-200" />
       </button>
     </div>
 
@@ -70,44 +75,50 @@ import Section from "@/layouts/Section.astro";
       id="responsive-menu-block"
     >
       <div
-        class="min-w-20 bg-black opacity-0 xs:min-w-36"
+        class="min-w-20 bg-gray-800 opacity-0 xs:min-w-36"
         id="responsive-menu-closer"
       >
       </div>
 
       <nav
-        class="w-full bg-gray-200 pl-4 pt-4 xs:pl-8 xs:pt-8"
+        class="w-full bg-gray-200 pl-4 pt-4 xs:pl-8 xs:pt-8 dark:bg-gray-600"
         id="responsive-menu-content"
       >
         <ul class="flex flex-col gap-1">
           <a class="text-3xl xs:text-4xl" href="#about">
-            <li class="group relative cursor-pointer">
+            <li
+              class="group relative cursor-pointer text-gray-800 dark:text-gray-200"
+            >
               About
 
               <div
-                class="absolute bottom-0 left-0 h-[1px] w-0 bg-black transition-[width] duration-300 group-hover:w-full"
+                class="absolute bottom-0 left-0 h-[1px] w-0 bg-gray-800 transition-[width] duration-300 group-hover:w-full dark:bg-gray-200"
               >
               </div>
             </li>
           </a>
 
           <a class="text-3xl xs:text-4xl" href="#studies">
-            <li class="group relative cursor-pointer">
+            <li
+              class="group relative cursor-pointer text-gray-800 dark:text-gray-200"
+            >
               Studies
 
               <div
-                class="absolute bottom-0 left-0 h-[1px] w-0 bg-black transition-[width] duration-300 group-hover:w-full"
+                class="absolute bottom-0 left-0 h-[1px] w-0 bg-gray-800 transition-[width] duration-300 group-hover:w-full dark:bg-gray-200"
               >
               </div>
             </li>
           </a>
 
           <a class="text-3xl xs:text-4xl" href="#career">
-            <li class="group relative cursor-pointer">
+            <li
+              class="group relative cursor-pointer text-gray-800 dark:text-gray-200"
+            >
               Career
 
               <div
-                class="absolute bottom-0 left-0 h-[1px] w-0 bg-black transition-[width] duration-300 group-hover:w-full"
+                class="absolute bottom-0 left-0 h-[1px] w-0 bg-gray-800 transition-[width] duration-300 group-hover:w-full dark:bg-gray-200"
               >
               </div>
             </li>
