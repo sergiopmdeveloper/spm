@@ -45,6 +45,8 @@ import Section from "@/layouts/Section.astro";
       "command-response"
     ) as HTMLParagraphElement;
 
+    commandInput.value = commandInput.value.toLowerCase().trim();
+
     if (!VALID_COMMANDS.includes(commandInput.value)) {
       commandResponse.textContent = "Invalid command";
       commandInput.value = "";
