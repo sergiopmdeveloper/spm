@@ -1,0 +1,94 @@
+---
+import Section from "@/layouts/Section.astro";
+---
+
+<Section id="about" title="About" contentSection={true}>
+  <main>
+    <div
+      class="relative h-[54rem] w-full rounded-lg bg-gray-900 p-5 xs:h-[38rem] sm:h-[32rem] md:h-96 dark:bg-gray-800"
+    >
+      <div class="absolute right-3 top-3 flex gap-2">
+        <div class="rounded-full bg-green-500 p-2"></div>
+        <div class="rounded-full bg-orange-500 p-2"></div>
+        <div class="rounded-full bg-red-500 p-2"></div>
+      </div>
+
+      <form class="flex gap-2 pt-4 text-lg sm:pt-0" id="command-form">
+        <span class="text-green-500">$root:</span>
+
+        <input
+          class="w-full bg-transparent text-white outline-none placeholder:opacity-50"
+          id="command-input"
+          type="text"
+          name="command"
+          placeholder="execute `help`"
+        />
+      </form>
+
+      <p class="pt-5 text-base text-gray-200 xs:text-lg" id="command-response">
+      </p>
+    </div>
+  </main>
+</Section>
+
+<script>
+  const VALID_COMMANDS = ["help", "clear", "me", "sports", "hobbies"];
+
+  const sendCommand = (e: Event) => {
+    e.preventDefault();
+
+    const commandInput = document.getElementById(
+      "command-input"
+    ) as HTMLInputElement;
+
+    const commandResponse = document.getElementById(
+      "command-response"
+    ) as HTMLParagraphElement;
+
+    if (!VALID_COMMANDS.includes(commandInput.value)) {
+      commandResponse.textContent = "Invalid command";
+      commandInput.value = "";
+      return;
+    }
+
+    if (commandInput.value === "help") {
+      commandResponse.textContent =
+        "Available commands: help, me, sports, hobbies";
+      commandInput.value = "";
+      return;
+    }
+
+    if (commandInput.value === "clear") {
+      commandResponse.textContent = "";
+      commandInput.value = "";
+      return;
+    }
+
+    if (commandInput.value === "me") {
+      commandResponse.textContent =
+        "Sergio Peña Muñoz is a 27-year-old programmer from Madrid, Spain. With a passion for coding, he spends much of his time creating and problem-solving through software development. When not immersed in lines of code, Sergio enjoys gaming, finding it a perfect way to unwind and engage his mind in different virtual worlds. He's also a dog lover, appreciating the loyal companionship and joy that canines bring to his life. Sergio's adventurous spirit is evident in his love for travel, always eager to explore new places and experience different cultures. This combination of interests - technology, gaming, animals, and travel - shapes Sergio's unique perspective on life and fuels his creativity both personally and professionally.";
+      commandInput.value = "";
+      return;
+    }
+
+    if (commandInput.value === "sports") {
+      commandResponse.textContent =
+        "Sergio Peña Muñoz is an avid sports enthusiast with a diverse range of interests. Football holds a special place in his heart, both as a spectator and player, allowing him to engage with the beautiful game from multiple perspectives. His passion for combat sports led him to MMA, which he followed closely and practiced until an injury and career commitments necessitated a step back from active participation. However, it's on the slopes where Sergio truly shines - snowboarding is his top sport, and he's developed considerable skill in carving up the mountains. This winter pursuit combines his love for adrenaline, outdoor adventure, and technical mastery, making it the perfect fit for his athletic inclinations.";
+      commandInput.value = "";
+      return;
+    }
+
+    if (commandInput.value === "hobbies") {
+      commandResponse.textContent =
+        "Sergio Peña Muñoz's leisure time is filled with a diverse array of hobbies that reflect his eclectic tastes. He has a particular fondness for horror films, enjoying the thrill and suspense they offer. His entertainment preferences also extend to anime, appreciating the unique storytelling and artistic styles found in Japanese animation. However, Sergio's passion for coding goes beyond just a professional pursuit - it's a hobby he enthusiastically engages with in his free time, constantly honing his skills and exploring new technologies. Balancing his digital interests, Sergio is committed to physical fitness and makes regular visits to the gym, recognizing the importance of maintaining both mental and physical well-being in his busy life.";
+      commandInput.value = "";
+      return;
+    }
+  };
+
+  const commandForm = document.getElementById(
+    "command-form"
+  ) as HTMLFormElement;
+
+  commandForm.addEventListener("submit", sendCommand);
+</script>
