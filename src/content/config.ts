@@ -6,8 +6,8 @@ const studiesCollection = defineCollection({
     title: z.string(),
     school: z.string(),
     description: z.string(),
-    startDate: z.string(),
-    endDate: z.string(),
+    startDate: z.date(),
+    endDate: z.date(),
   }),
 });
 

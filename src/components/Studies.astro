@@ -1,21 +1,13 @@
 ---
 import Section from "@/layouts/Section.astro";
+import { formatDate } from "@/utils";
 import { getCollection } from "astro:content";
 
 let studies = await getCollection("studies");
 
 studies = studies.sort((a, b) => {
-  return (
-    new Date(b.data.startDate).getTime() - new Date(a.data.startDate).getTime()
-  );
+  return b.data.startDate.getTime() - a.data.startDate.getTime();
 });
-
-function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  const month = date.toLocaleString("default", { month: "short" });
-  const year = date.getFullYear();
-  return `${month} ${year}`;
-}
 ---
 
 <Section id="studies" title="Studies" contentSection={true}>
