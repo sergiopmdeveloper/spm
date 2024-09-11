@@ -1,4 +1,4 @@
-import { z, defineCollection } from "astro:content";
+import { defineCollection, z } from "astro:content";
 
 const studiesCollection = defineCollection({
   type: "content",
@@ -7,10 +7,22 @@ const studiesCollection = defineCollection({
     school: z.string(),
     description: z.string(),
     startDate: z.date(),
-    endDate: z.date(),
+    endDate: z.date().optional(),
+  }),
+});
+
+const careerCollection = defineCollection({
+  type: "content",
+  schema: z.object({
+    job: z.string(),
+    company: z.string(),
+    description: z.string(),
+    startDate: z.date(),
+    endDate: z.date().optional(),
   }),
 });
 
 export const collections = {
   studies: studiesCollection,
+  career: careerCollection,
 };
