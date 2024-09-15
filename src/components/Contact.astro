@@ -3,7 +3,14 @@ import Section from "@/layouts/Section.astro";
 ---
 
 <Section id="contact" title="Contact" contentSection={true}>
-  <main>
+  <main class="relative">
+    <p
+      id="success-message"
+      class="absolute -top-8 right-0 hidden rounded bg-green-300 px-2 py-1 text-xs text-green-700 transition-opacity duration-500"
+    >
+      Sent!
+    </p>
+
     <form id="contactForm" class="flex flex-col gap-5">
       <div class="flex flex-col gap-5 sm:flex-row">
         <input
@@ -54,7 +61,8 @@ import Section from "@/layouts/Section.astro";
 
       <button
         type="submit"
-        class="rounded-3xl bg-gray-800 py-3 font-bold text-gray-200 transition-[filter] hover:brightness-125 dark:bg-gray-200 dark:text-gray-800 dark:hover:brightness-90"
+        id="submit-button"
+        class="rounded-3xl bg-gray-800 py-3 font-bold text-gray-200 transition-[filter] hover:brightness-125 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-200 dark:text-gray-800 dark:hover:brightness-90"
       >
         Send
       </button>
@@ -65,12 +73,30 @@ import Section from "@/layouts/Section.astro";
 <script>
   import { actions, isInputError } from "astro:actions";
 
+  const FOCUS_RING_CLASS = "focus:ring-[1px]";
+
+  const ERROR_BORDER_CLASSES = [
+    "border-[1px]",
+    "border-red-500",
+    "dark:border-red-600",
+  ];
+
+  const HIDDEN_CLASS = "hidden";
+
   const sendContactEmail = async (event: Event) => {
     event.preventDefault();
 
     const name = document.getElementById("name") as HTMLInputElement;
     const email = document.getElementById("email") as HTMLInputElement;
     const message = document.getElementById("message") as HTMLTextAreaElement;
+
+    const submitButton = document.getElementById(
+      "submit-button"
+    ) as HTMLButtonElement;
+
+    const successMessage = document.getElementById(
+      "success-message"
+    ) as HTMLParagraphElement;
 
     const listOfErrors = document.getElementById(
       "list-of-errors"
@@ -91,100 +117,71 @@ import Section from "@/layouts/Section.astro";
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
 
-    const { data, error } = await actions.sendContactEmail(formData);
+    submitButton.disabled = true;
+    submitButton.textContent = "Sending...";
 
-    if (data) {
-      form.reset();
+    try {
+      const { data, error } = await actions.sendContactEmail(formData);
+
+      if (data) {
+        form.reset();
+
+        successMessage.classList.remove(HIDDEN_CLASS);
+        successMessage.style.opacity = "1";
+
+        setTimeout(() => {
+          successMessage.style.opacity = "0";
+
+          setTimeout(() => {
+            successMessage.classList.add(HIDDEN_CLASS);
+          }, 500);
+        }, 3000);
+      }
+
+      if (isInputError(error)) {
+        listOfErrors.classList.remove(HIDDEN_CLASS);
+
+        /**
+         * Handles the error for a field
+         * @param {HTMLInputElement | HTMLTextAreaElement} field - The field to handle the error for
+         * @param {HTMLParagraphElement} errorElement - The element to display the error message
+         * @param {string | undefined} errorMessage - The error message to display
+         */
+        const handleFieldError = (
+          field: HTMLInputElement | HTMLTextAreaElement,
+          errorElement: HTMLParagraphElement,
+          errorMessage: string | undefined
+        ) => {
+          if (errorMessage) {
+            field.classList.remove(FOCUS_RING_CLASS);
+            field.classList.add(...ERROR_BORDER_CLASSES);
+            errorElement.textContent = errorMessage;
+            errorElement.classList.remove(HIDDEN_CLASS);
+          } else {
+            field.classList.add(FOCUS_RING_CLASS);
+            field.classList.remove(...ERROR_BORDER_CLASSES);
+            errorElement.classList.add(HIDDEN_CLASS);
+            errorElement.textContent = "";
+          }
+        };
+
+        handleFieldError(name, nameError, error.fields.name?.[0]);
+        handleFieldError(email, emailError, error.fields.email?.[0]);
+        handleFieldError(message, messageError, error.fields.message?.[0]);
+      } else {
+        listOfErrors.classList.add(HIDDEN_CLASS);
+
+        [name, email, message].forEach((field) => {
+          field.classList.add(FOCUS_RING_CLASS);
+          field.classList.remove(...ERROR_BORDER_CLASSES);
+        });
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = "Send";
     }
-
-    if (isInputError(error)) {
-      listOfErrors.classList.remove("hidden");
-
-      if (error.fields.name && error.fields.name.length > 0) {
-        name.classList.remove("focus:ring-[1px]");
-        name.classList.add(
-          "border-[1px]",
-          "border-red-500",
-          "dark:border-red-600"
-        );
-        nameError.textContent = error.fields.name[0];
-        nameError.classList.remove("hidden");
-      } else {
-        name.classList.add("focus:ring-[1px]");
-        name.classList.remove(
-          "border-[1px]",
-          "border-red-500",
-          "dark:border-red-600"
-        );
-        nameError.classList.add("hidden");
-        nameError.textContent = "";
-      }
-
-      if (error.fields.email && error.fields.email.length > 0) {
-        email.classList.remove("focus:ring-[1px]");
-        email.classList.add(
-          "border-[1px]",
-          "border-red-500",
-          "dark:border-red-600"
-        );
-        emailError.textContent = error.fields.email[0];
-        emailError.classList.remove("hidden");
-      } else {
-        email.classList.add("focus:ring-[1px]");
-        email.classList.remove(
-          "border-[1px]",
-          "border-red-500",
-          "dark:border-red-600"
-        );
-        emailError.classList.add("hidden");
-        emailError.textContent = "";
-      }
-
-      if (error.fields.message && error.fields.message.length > 0) {
-        message.classList.remove("focus:ring-[1px]");
-        message.classList.add(
-          "border-[1px]",
-          "border-red-500",
-          "dark:border-red-600"
-        );
-        messageError.textContent = error.fields.message[0];
-        messageError.classList.remove("hidden");
-      } else {
-        message.classList.add("focus:ring-[1px]");
-        message.classList.remove(
-          "border-[1px]",
-          "border-red-500",
-          "dark:border-red-600"
-        );
-        messageError.classList.add("hidden");
-        messageError.textContent = "";
-      }
-
-      return;
-    }
-
-    listOfErrors.classList.add("hidden");
-
-    name.classList.add("focus:ring-[1px]");
-    name.classList.remove(
-      "border-[1px]",
-      "border-red-500",
-      "dark:border-red-600"
-    );
-
-    email.classList.add("focus:ring-[1px]");
-    email.classList.remove(
-      "border-[1px]",
-      "border-red-500",
-      "dark:border-red-600"
-    );
-
-    message.classList.add("focus:ring-[1px]");
-    message.classList.remove(
-      "border-[1px]",
-      "border-red-500",
-      "dark:border-red-600"
-    );
   };
 
   document.addEventListener("DOMContentLoaded", () => {
