@@ -1,0 +1,191 @@
+---
+import Section from "@/layouts/Section.astro";
+---
+
+<Section id="contact" title="Contact" contentSection={true}>
+  <main class="relative">
+    <p
+      id="success-message"
+      class="absolute -top-8 right-0 hidden rounded bg-green-300 px-2 py-1 text-xs text-green-700 transition-opacity duration-500"
+    >
+      Sent!
+    </p>
+
+    <form id="contactForm" class="flex flex-col gap-5">
+      <div class="flex flex-col gap-5 sm:flex-row">
+        <input
+          class="rounded-lg bg-gray-100 px-3 py-2.5 outline-none focus:ring-[1px] focus:ring-gray-800 sm:w-1/2 dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-gray-200"
+          id="name"
+          name="name"
+          type="text"
+          placeholder="Name..."
+          autocomplete="name"
+        />
+
+        <input
+          class="rounded-lg bg-gray-100 px-3 py-2.5 outline-none focus:ring-[1px] focus:ring-gray-800 sm:w-1/2 dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-gray-200"
+          id="email"
+          name="email"
+          type="text"
+          placeholder="Email..."
+          autocomplete="email"
+        />
+      </div>
+
+      <textarea
+        class="w-full resize-none rounded-lg bg-gray-100 px-3 py-2.5 outline-none focus:ring-[1px] focus:ring-gray-800 dark:bg-gray-800 dark:text-gray-200 dark:focus:ring-gray-200"
+        id="message"
+        name="message"
+        placeholder="Message..."
+        rows="8"></textarea>
+
+      <ul class="hidden" id="list-of-errors">
+        <li
+          class="hidden list-inside list-disc text-red-600 dark:text-red-500"
+          id="name-error"
+        >
+        </li>
+
+        <li
+          class="hidden list-inside list-disc text-red-600 dark:text-red-500"
+          id="email-error"
+        >
+        </li>
+
+        <li
+          class="hidden list-inside list-disc text-red-600 dark:text-red-500"
+          id="message-error"
+        >
+        </li>
+      </ul>
+
+      <button
+        type="submit"
+        id="submit-button"
+        class="rounded-3xl bg-gray-800 py-3 font-bold text-gray-200 transition-[filter] hover:brightness-125 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-200 dark:text-gray-800 dark:hover:brightness-90"
+      >
+        Send
+      </button>
+    </form>
+  </main>
+</Section>
+
+<script>
+  import { actions, isInputError } from "astro:actions";
+
+  const FOCUS_RING_CLASS = "focus:ring-[1px]";
+
+  const ERROR_BORDER_CLASSES = [
+    "border-[1px]",
+    "border-red-500",
+    "dark:border-red-600",
+  ];
+
+  const HIDDEN_CLASS = "hidden";
+
+  const sendContactEmail = async (event: Event) => {
+    event.preventDefault();
+
+    const name = document.getElementById("name") as HTMLInputElement;
+    const email = document.getElementById("email") as HTMLInputElement;
+    const message = document.getElementById("message") as HTMLTextAreaElement;
+
+    const submitButton = document.getElementById(
+      "submit-button"
+    ) as HTMLButtonElement;
+
+    const successMessage = document.getElementById(
+      "success-message"
+    ) as HTMLParagraphElement;
+
+    const listOfErrors = document.getElementById(
+      "list-of-errors"
+    ) as HTMLUListElement;
+
+    const nameError = document.getElementById(
+      "name-error"
+    ) as HTMLParagraphElement;
+
+    const emailError = document.getElementById(
+      "email-error"
+    ) as HTMLParagraphElement;
+
+    const messageError = document.getElementById(
+      "message-error"
+    ) as HTMLParagraphElement;
+
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Sending...";
+
+    try {
+      const { data, error } = await actions.sendContactEmail(formData);
+
+      if (data) {
+        form.reset();
+
+        successMessage.classList.remove(HIDDEN_CLASS);
+        successMessage.style.opacity = "1";
+
+        setTimeout(() => {
+          successMessage.style.opacity = "0";
+
+          setTimeout(() => {
+            successMessage.classList.add(HIDDEN_CLASS);
+          }, 500);
+        }, 3000);
+      }
+
+      if (isInputError(error)) {
+        listOfErrors.classList.remove(HIDDEN_CLASS);
+
+        /**
+         * Handles the error for a field
+         * @param {HTMLInputElement | HTMLTextAreaElement} field - The field to handle the error for
+         * @param {HTMLParagraphElement} errorElement - The element to display the error message
+         * @param {string | undefined} errorMessage - The error message to display
+         */
+        const handleFieldError = (
+          field: HTMLInputElement | HTMLTextAreaElement,
+          errorElement: HTMLParagraphElement,
+          errorMessage: string | undefined
+        ) => {
+          if (errorMessage) {
+            field.classList.remove(FOCUS_RING_CLASS);
+            field.classList.add(...ERROR_BORDER_CLASSES);
+            errorElement.textContent = errorMessage;
+            errorElement.classList.remove(HIDDEN_CLASS);
+          } else {
+            field.classList.add(FOCUS_RING_CLASS);
+            field.classList.remove(...ERROR_BORDER_CLASSES);
+            errorElement.classList.add(HIDDEN_CLASS);
+            errorElement.textContent = "";
+          }
+        };
+
+        handleFieldError(name, nameError, error.fields.name?.[0]);
+        handleFieldError(email, emailError, error.fields.email?.[0]);
+        handleFieldError(message, messageError, error.fields.message?.[0]);
+      } else {
+        listOfErrors.classList.add(HIDDEN_CLASS);
+
+        [name, email, message].forEach((field) => {
+          field.classList.add(FOCUS_RING_CLASS);
+          field.classList.remove(...ERROR_BORDER_CLASSES);
+        });
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = "Send";
+    }
+  };
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("contactForm") as HTMLFormElement;
+    form.addEventListener("submit", sendContactEmail);
+  });
+</script>
